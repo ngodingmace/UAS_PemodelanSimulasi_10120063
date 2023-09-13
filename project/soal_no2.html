@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10120063</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <section class="container">
+        <nav class="wrapper">
+          <div class="brand">
+            <div class="firstname">UAS</div>
+            <div class="listname">10120063</div>
+          </div>
+          <ul class="navi">
+            <li><a href="/">PEMODELAN DAN SIMULASI</a></li>
+            <li><img src="/img/profil.jpeg" alt="..."></li>
+          </ul>
+        </nav> 
+     </section>
+     <section class="main1">
+        <h1 style="text-align: center;">Random Number Generator</h1>
+        <br>
+      
+        <label for="method">Metode:</label>
+        <select id="method">
+            <option value="additif">Additif</option>
+            <option value="multiply">Multiply</option>
+        </select>
+        <br><br>
+    <form action="">
+        <label for="m">Nilai m &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="number" id="m">
+
+        <br><br>
+        <label for="a">Nilai a &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="number" id="a">
+
+        <br><br>
+        <label for="Xo">Nilai Xo &nbsp;&nbsp;:</label>
+        <input type="number" id="Xo">
+
+        <br><br>
+        <label for="c">Nilai c &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="number" id="c">
+    </form>
+        <br>
+        <a id="submit-btn" href="/index.html">Back</a>
+        <button id="submit-btn" onclick="generateRandomNumbers()">Generate</button>
+     </section>    
+        <div class="acakB">
+            <h3>Hasil Bilangan Acak:</h3>
+            <br>
+            <ul id="randomNumbers"></ul>
+        </div>
+</body>
+</html>
+<script>
+    function generateRandomNumbers() {
+        const method = document.getElementById("method").value;
+        const m = parseInt(document.getElementById("m").value);
+        const a = parseInt(document.getElementById("a").value);
+        const Xo = parseInt(document.getElementById("Xo").value);
+        const c = parseInt(document.getElementById("c").value);
+        const n = 10; // Ubah sesuai kebutuhan, minimal 10 data
+
+        const randomNumbers = [];
+        let Xn = Xo;
+        
+        for (let i = 0; i < n; i++) {
+            randomNumbers.push(Xn);
+            if (method === "additif") {
+                Xn = (a * Xn + c) % m;
+            } else if (method === "multiply") {
+                Xn = (a * Xn) % m;
+            }
+        }
+
+        const randomNumbersList = document.getElementById("randomNumbers");
+        randomNumbersList.innerHTML = "";
+        randomNumbers.forEach((num, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${index + 1}. ${num}`;
+            randomNumbersList.appendChild(listItem);
+        });
+    }
+</script>
+

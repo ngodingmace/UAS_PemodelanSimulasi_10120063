@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10120063</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <section class="container">
+        <nav class="wrapper">
+          <div class="brand">
+            <div class="firstname">UAS</div>
+            <div class="listname">10120063</div>
+          </div>
+          <ul class="navi">
+            <li><a href="/">PEMODELAN DAN SIMULASI</a></li>
+            <li><img src="/img/profil.jpeg" alt="..."></li>
+          </ul>
+        </nav> 
+     </section>
+     <section class="main">
+      <h1>Simulasi Antrean</h1>
+      <br>
+      <form id="simulationForm">
+          <div class="from">
+            <label for="arrivalRate">Waktu Kedatangan  &nbsp; &nbsp; &nbsp; &nbsp;:</label>
+            <input type="number" id="arrivalRate" placeholder="Input waktu kedatangan" step="0.01" required><br><br>
+            
+            <label for="serviceRate">Waktu Pelayanan  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :</label>
+            <input type="number" id="serviceRate" placeholder="Input waktu pelayanan" step="0.01" required><br><br>
+            
+            <label for="queueLength">Panjang Antrean Awal  &nbsp; :</label>
+            <input type="number" placeholder="Input panjang antrean awal" id="queueLength" required><br><br>
+          </div>
+      </form>
+      <br>
+      <h4>Hasil Simulasi</h4>
+      <br>
+      <p>Panjang Antrean Akhir &nbsp; &nbsp; &nbsp;:   <b><span id="finalQueueLength"></span></b></p>
+      <p>Presentase Waktu Tunggu&nbsp;: <b><span id="waitingPercentage"></span></b></p>
+      <br>
+      <a id="submit-btn" href="/index.html">Back</a>
+      <button id="submit-btn" type="button" onclick="simulateQueue()">Submit</button>
+   </section>
+      <script>
+          function simulateQueue() {
+              const arrivalRate = parseFloat(document.getElementById('arrivalRate').value);
+              const serviceRate = parseFloat(document.getElementById('serviceRate').value);
+              const initialQueueLength = parseInt(document.getElementById('queueLength').value);
+              const m = 13;
+              const a = 7;
+              let xn = 1; // Initial value
+              
+              let totalWaitingTime = 0;
+              let queueLength = initialQueueLength;
+              const numArrivals = 10;
+  
+              for (let i = 0; i < numArrivals; i++) {
+                  // Generate random service time using RNG multiply
+                  const serviceTime = (a * xn) % m;
+                  xn = serviceTime;
+  
+                  const interarrivalTime = -Math.log(Math.random()) / arrivalRate;
+                  totalWaitingTime += Math.max(0, queueLength) + serviceTime;
+                  queueLength += 1;
+              }
+  
+              const avgWaitingTime = totalWaitingTime / numArrivals;
+              const waitingPercentage = (avgWaitingTime / (avgWaitingTime + (1 / serviceRate))) * 100;
+  
+              document.getElementById('finalQueueLength').textContent = queueLength;
+              document.getElementById('waitingPercentage').textContent = waitingPercentage.toFixed(2) + '%';
+          }
+      </script>
+    
+</body>
+</html>
+
